@@ -7,6 +7,7 @@ namespace BuildCalypse.CodeGen
         public string Name { get; set; }
         public int Bp { get; set; }
         public string SpawnEggId { get; set; }
+        public int Index { get; internal set; }
 
         public string GetFunctionBody()
         {

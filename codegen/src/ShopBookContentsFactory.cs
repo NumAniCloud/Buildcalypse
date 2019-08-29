@@ -4,23 +4,19 @@ namespace BuildCalypse.CodeGen
 {
     public class ShopBookContentsFactory
     {
-        private static readonly int PlayerNum = 8;
-
-        public IEnumerable<ShopContent> GetContents(Structure[] structures)
+        public IEnumerable<ShopContent> GetContents(Structure[] structures, int playerId)
         {
             foreach (var item in structures)
             {
-                for (int i = 0; i < PlayerNum; i++)
+                yield return new ShopContent()
                 {
-                    yield return new ShopContent()
-                    {
-                        PlayerId = i + 1,
-                        Id = item.Id,
-                        Name = item.Name,
-                        Bp = item.Bp,
-                        SpawnEggId = item.SpawnEggId,
-                    };
-                }
+                    PlayerId = playerId,
+                    Id = item.Id,
+                    Name = item.Name,
+                    Bp = item.Bp,
+                    SpawnEggId = item.SpawnEggId,
+                    Index = item.Index,
+                };
             }
         }
     }

@@ -12,5 +12,6 @@ namespace BuildCalypse.CodeGen
         public string Name { get; internal set; }
         public int Bp { get; internal set; }
         public string SpawnEggId { get; set; }
+        public int Index { get; internal set; }
     }
 }
