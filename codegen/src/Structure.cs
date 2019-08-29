@@ -9,5 +9,8 @@ namespace BuildCalypse.CodeGen
         public string FullName { get; internal set; }
         public Vector3 RedstoneOffset { get; internal set; }
         public Vector3 Offset { get; internal set; }
+        public string Name { get; internal set; }
+        public int Bp { get; internal set; }
+        public string SpawnEggId { get; set; }
     }
 }

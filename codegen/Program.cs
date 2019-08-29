@@ -19,6 +19,7 @@ namespace codegen
             };
             var factory = new CommandBlockFactory();
             var blocks = factory.GetCommands(structure, new Vector3(10, 5, 10));
+            var give = $"give @p pig_spawn_egg{{EntityTag={{Tag=[\"{structure.Id}\"]}}}} 1";
 
             foreach (var item in blocks)
             {
