@@ -28,6 +28,7 @@ namespace BuildCalypse.CodeGen
                 {
                     yield return DirectionQueryBlock(structure, i, new Direction(j * 90), origin);
                 }
+                yield return ResetPlayerDetectorBlock(i, origin);
             }
 
             for (int j = 0; j < DirectionNum; j++)
@@ -37,6 +38,22 @@ namespace BuildCalypse.CodeGen
                 yield return PlaceRedstoneBlock(structure, direction, origin);
                 yield return KillMobBlock(structure, direction, origin);
             }
+        }
+
+        private CommandBlock ResetPlayerDetectorBlock(int playerId, Vector3 origin)
+        {
+            var start = origin + new Vector3(playerId, 2, 0);
+            var end = origin + new Vector3(playerId, 2, 3);
+            var command = $"fill {start.X} {start.Y} {start.Z} {end.X} {end.Y} {end.Z} air";
+            return new CommandBlock
+            {
+                Command = command,
+                Position = end + new Vector3(0, 0, 2),
+                Facing = Direction.South,
+                Conditional = false,
+                NeedsRedstone = true,
+                Mode = CommandBlockMode.Impulse
+            };
         }
 
         private CommandBlock KillMobBlock(Structure structure, Direction direction, Vector3 origin)

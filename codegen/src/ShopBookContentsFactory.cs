@@ -15,7 +15,6 @@ namespace BuildCalypse.CodeGen
                     Name = item.Name,
                     Bp = item.Bp,
                     SpawnEggId = item.SpawnEggId,
-                    Index = item.Index,
                 };
             }
         }

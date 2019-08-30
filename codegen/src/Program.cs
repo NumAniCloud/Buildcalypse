@@ -26,29 +26,11 @@ namespace codegen
                 structure
             };
 
-            var placerFactory = new CommandBlockFactory();
-            var shopContentsFactory = new ShopBookContentsFactory();
-            var shopBookFactory = new ShopBookFactory();
-
-            var placer = placerFactory.GetCommands(structure, new Vector3(10, 5, 10));
-
-            var triggers = new ShopTriggerObjectives();
-            foreach (var item in structures)
-            {
-                triggers.AddTriggerFor(item);
-            }
-
-            var shopContentsOfPlayer = new Dictionary<int, ShopContent[]>();
-            var shopBookOfPlayer = new Dictionary<int, ShopBook>();
-            for (int i = 0; i < 8; i++)
-            {
-                var contents = shopContentsFactory.GetContents(structures, i + 1).ToArray();
-                var book = shopBookFactory.GetShopBook(contents, i + 1, triggers);
-                shopContentsOfPlayer[i+1] = contents;
-                shopBookOfPlayer[i+1] = book;
-            }
+            var codeGen = new CodeGen();
+            var codes = codeGen.Generate(structures, new Vector3(10, 5, 10));
 
             // テスト用出力
+            /*
             foreach (var item in placer)
             {
                 System.Console.WriteLine(item.GetCommandSetBlock());
@@ -67,6 +49,7 @@ namespace codegen
                 }
                 System.Console.WriteLine(shopBookOfPlayer[i+1].GetGiveCommand());
             }
+            */
         }
     }
 }
