@@ -49,7 +49,7 @@ namespace BuildCalypse.CodeGen
             var shopBookOfPlayer = new Dictionary<int, ShopBook>();
             for (int i = 0; i < 8; i++)
             {
-                var book = shopBookFactory.GetShopBook(shopContents[i], i + 1, triggers);
+                var book = shopBookFactory.GetShopBook(shopContents[i+1], i + 1, triggers);
                 shopBookOfPlayer[i + 1] = book;
             }
             return shopBookOfPlayer;

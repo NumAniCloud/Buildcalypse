@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
+﻿using System.Numerics;
 using BuildCalypse.CodeGen;
 
 namespace codegen
@@ -10,21 +7,8 @@ namespace codegen
     {
         static void Main(string[] args)
         {
-            var structure = new Structure()
-            {
-                Id = "floor",
-                FullName = "bldclps:floor",
-                MobName = "pig",
-                Offset = new Vector3(-1, 0, 0),
-                RedstoneOffset = new Vector3(0, 1, 0),
-                Bp = 5,
-                Name = "床",
-                SpawnEggId = "pig_spawn_egg"
-            };
-            var structures = new []
-            {
-                structure
-            };
+            var structureLoader = new StructureLoader();
+            var structures = structureLoader.Load("input/structures.csv");
 
             var codeGen = new CodeGen();
             var codes = codeGen.Generate(structures, new Vector3(10, 5, 10));
