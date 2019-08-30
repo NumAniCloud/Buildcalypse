@@ -7,8 +7,11 @@ namespace BuildCalypse.CodeGen
 {
     public class CodeGen
     {
+        private int placerClusterXCount = 3;
+
         public CodeGenResult Generate(Structure[] structures, Vector3 origin)
         {
+            placerClusterXCount = Math.Min(3, (int)Math.Sqrt(structures.Length));
             var placers = GetCommandBlockPlacers(structures, origin);
             var circuits = GetCircuitPlacers(structures, origin);
             var triggers = GetTriggerObjectives(structures);
@@ -24,17 +27,21 @@ namespace BuildCalypse.CodeGen
             };
         }
 
-        private static Dictionary<string, string[]> GetCircuitPlacers(Structure[] structures, Vector3 origin)
+        private Vector3 GetClusterPosition(int index)
+        {
+            var x = index % placerClusterXCount;
+            var y = index / placerClusterXCount / placerClusterXCount;
+            var z = index / placerClusterXCount % placerClusterXCount;
+            return new Vector3(x * 10, y * 6, z * 8);
+        }
+
+        private Dictionary<string, string[]> GetCircuitPlacers(Structure[] structures, Vector3 origin)
         {
             var placerFactory = new PlacerCircuitFactory();
             var placers = new Dictionary<string, string[]>();
-            var xCount = (int)Math.Sqrt(structures.Length);
             for (int i = 0; i < structures.Length; i++)
             {
-                var x = i % xCount;
-                var y = i / xCount / xCount;
-                var z = i / xCount % xCount;
-                var placerOrigin = origin + new Vector3(x, y, z);
+                var placerOrigin = origin + GetClusterPosition(i);
                 var placer = placerFactory.GetCommandsToPlace(placerOrigin).ToArray();
                 placers[structures[i].Id] = placer;
             }
@@ -78,17 +85,13 @@ namespace BuildCalypse.CodeGen
             return triggers;
         }
 
-        private static Dictionary<string, CommandBlock[]> GetCommandBlockPlacers(Structure[] structures, Vector3 origin)
+        private Dictionary<string, CommandBlock[]> GetCommandBlockPlacers(Structure[] structures, Vector3 origin)
         {
             var placerFactory = new CommandBlockFactory();
             var placers = new Dictionary<string, CommandBlock[]>();
-            var xCount = (int)Math.Sqrt(structures.Length);
             for (int i = 0; i < structures.Length; i++)
             {
-                var x = i % xCount;
-                var y = i / xCount / xCount;
-                var z = i / xCount % xCount;
-                var placerOrigin = origin + new Vector3(x, y, z);
+                var placerOrigin = origin + GetClusterPosition(i);
                 var placer = placerFactory.GetCommands(structures[i], placerOrigin).ToArray();
                 placers[structures[i].Id] = placer;
             }

@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
-using BuildCalypse.CodeGen;
 
-namespace codegen
+namespace BuildCalypse.CodeGen
 {
     class Program
     {
