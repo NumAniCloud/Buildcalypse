@@ -17,14 +17,37 @@ namespace BuildCalypse.CodeGen
             var triggers = GetTriggerObjectives(structures);
             var shopContents = GetShopContents(structures);
             var shopBooks = GetShopBook(structures, shopContents, triggers);
+            var shopTriggerBlocks = GetShopTriggerBlocks(shopContents[1], origin);
 
             return new CodeGenResult
             {
                 Placers = placers,
                 PlacerCircuitBuilders = circuits,
                 ShopContents = shopContents,
-                ShopBooks = shopBooks
+                ShopBooks = shopBooks,
+                ShopTriggerBlocks = shopTriggerBlocks,
             };
+        }
+
+        private CommandBlock[] GetShopTriggerBlocks(ShopContent[] contents, Vector3 origin)
+        {
+            IEnumerable<CommandBlock> Select(ShopContent[] contents)
+            {
+                var shopOrigin = origin + new Vector3(-8, 0, 0);
+                for (int i = 0; i < contents.Length; i++)
+                {
+                    yield return new CommandBlock()
+                    {
+                        Command = contents[i].GetCommandBlockCommand(),
+                        Conditional = false,
+                        Facing = Direction.East,
+                        Mode = CommandBlockMode.Repeat,
+                        NeedsRedstone = false,
+                        Position = shopOrigin + new Vector3(0, 0, i),
+                    };
+                }
+            }
+            return Select(contents).ToArray();
         }
 
         private Vector3 GetClusterPosition(int index)
